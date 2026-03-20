@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess Nigga</title>
+</head>
+<body>
+
+<style>
+  /* YOUR EXACT ORIGINAL CSS - UNTOUCHED */
+  body {
+    margin: 0;
+    background-color: black;
+  }
+  
+  #main img {
+    margin: auto;
+    height: 700px;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: orange;
+    position: absolute;
+    display: flex;
+    transition: 0.5s;
+    user-select: none;
+    pointer-events: none;
+  }
+        
+  #solis { bottom: 450px; right: 20px; height: 190px; width: 60px; }
+  #clit { height: 350px; width: 90px; top: 200px; left: 20px; }
+  #jansen { height: 400px; width: 70px; right: 110px; bottom: 40px; }
+  #ambot { height: 155px; width: 100px; left: 240px; bottom: 500px; }
+  #olazo { height: 250px; width: 60px; left: 80px; bottom: 300px; }
+  #bert { height: 340px; width: 70px; left: 210px; bottom: 80px; }
+  #ambariko { height: 340px; width: 80px; right: 240px; bottom: 200px; }
+    
+  .button {
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    position: absolute;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    user-select: none;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background: transparent;
+    color: white;
+  }
+        
+  #text {
+    top: 500px;
+    justify-items: center;
+    border-radius: 3px;
+    width: 300px;
+    border: 10px;
+    font-weight: bold;
+    font-family: arial;
+    text-align: center;
+    font-size: 20px;
+    background-color: gray;
+    color: yellow;
+    line-height: 28px;
+    text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.7);
+    height: 150px;
+    box-shadow: 5px 5px 0px rgba(255, 255, 255, 0.7);
+    z-index: 20;
+    position: absolute; /* Added to keep it centered over main */
+    left: 0; right: 0; margin: auto;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+</style>
+
+<div id="main"> 
+  <img src="main.jpeg" id="men"> 
+  <img src="" id="person-overlay" style="opacity: 0; z-index: 2; height: 700px; width: 400px; position: absolute; left: 0; right: 0; margin: auto; pointer-events: none; transition: 0.5s;">
+</div>
+
+<div id="solis" class="button"></div>
+<div id="jansen" class="button"></div>
+<div id="bert" class="button"></div>
+<div id="clit" class="button"></div>
+<div id="ambariko" class="button"></div>
+<div id="olazo" class="button"></div>
+<div id="ambot" class="button"></div>
+<div id="text">Name, Bio</div>
+
+<script>
+  const overlay = document.getElementById('person-overlay');
+  const displayer = document.getElementById('text');
+  let typeInterval;
+
+  // Preload logic remains
+  const imagesToLoad = ["solis.png", "jansen.png", "bert.png", "olazo.png", "ambot.png", "clit.png", "ambariko.png"];
+  imagesToLoad.forEach(src => { const img = new Image(); img.src = src; });
+
+  function typeNewsText(message) {
+    // Stop any existing typing immediately
+    clearInterval(typeInterval);
+    displayer.innerHTML = "";
+    let i = 0;
+    
+    typeInterval = setInterval(() => {
+      if (i < message.length) {
+        displayer.innerHTML += message.charAt(i);
+        i++;
+      } else {
+        clearInterval(typeInterval);
+      }
+    }, 15); // Speed of 15ms per character
+  }
+
+  function showPerson(imgSrc, bio) {
+    // Fix: Clear previous typing so it doesn't overlap
+    clearInterval(typeInterval);
+    
+    // Snappy swap
+    overlay.style.transition = "none";
+    overlay.style.opacity = 0;
+    overlay.src = imgSrc;
+    
+    setTimeout(() => {
+      overlay.style.transition = "0.5s";
+      overlay.style.opacity = 1;
+      typeNewsText(bio);
+    }, 20);
+  }
+
+  function hidePerson() {
+    overlay.style.opacity = 0;
+    // We clear the interval so the "Name, Bio" doesn't get messed up
+    clearInterval(typeInterval);
+    displayer.innerHTML = "Name, Bio";
+  }
+
+  const setup = (id, img, bio) => {
+    const el = document.getElementById(id);
+    
+    // Instant touch response
+    el.onpointerdown = (e) => {
+      e.preventDefault(); 
+      showPerson(img, bio);
+    };
+    
+    // When you let go or move finger away, it resets
+    el.onpointerup = hidePerson;
+    el.onpointerleave = hidePerson;
+  };
+
+  setup('solis', 'solis.png', "Pauljem Solis: Known for it's consistent awards.");
+  setup('jansen', 'jansen.png', "Jansen Dayday: Likes to send memes related to Love and Light TV.");
+  setup('bert', 'bert.png', "Bert Daniel Sellie: He loved her, but She doesn't want him.");
+  setup('olazo', 'olazo.png', "Justine Olazo: Chopaa oteynnn");
+  setup('ambot', 'ambot.png', "//Author// Bitch, I don't know who this nigga's name is!");
+  setup('clit', 'clit.png', "Jorenz Clifford Etang: Multiple talents lies within him.");
+  setup('ambariko', 'ambariko.png', "Avel Troy Albarico: Certified Yapper, Best Guy in the gang!");
+
+</script>
+</body>
+</html>
